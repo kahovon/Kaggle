@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readr)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(stringr)\n\ntrain <- read_csv(\"train.csv\")\nstr(train)\nView(train)\n\nname.temp <- train$Name\nname.title <- sapply(train$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})\ntable(name.title)\n\nprop.table(table(name.title))\n\ntitles <- unique(as.character(name.title))\n\ntrain2 <- train %>%\n  mutate(Mr=ifelse(str_detect(Name,pattern = titles[1]),1,0)) %>%\n  mutate(Mrs=ifelse(str_detect(Name,pattern = titles[2]),1,0)) %>%\n  mutate(Miss=ifelse(str_detect(Name,pattern = titles[3]),1,0)) %>%\n  mutate(Master=ifelse(str_detect(Name,pattern = titles[4]),1,0)) %>%\n  mutate(Don=ifelse(str_detect(Name,pattern = titles[5]),1,0)) %>%\n  mutate(Rev=ifelse(str_detect(Name,pattern = titles[6]),1,0)) %>%\n  mutate(Dr=ifelse(str_detect(Name,pattern = titles[7]),1,0)) %>%\n  mutate(Mlle=ifelse(str_detect(Name,pattern = titles[8])|str_detect(Name,pattern = titles[13]),1,0)) %>%\n  mutate(Ms=ifelse(str_detect(Name,pattern = titles[9]),1,0)) %>%\n  mutate(Major=ifelse(str_detect(Name,pattern = titles[10]),1,0)) %>%\n  mutate(Lady=ifelse(str_detect(Name,pattern = titles[11]),1,0)) %>%\n  mutate(Sir=ifelse(str_detect(Name,pattern = titles[12]),1,0)) %>%\n  mutate(Col=ifelse(str_detect(Name,pattern = titles[14]),1,0)) %>%\n  mutate(Capt=ifelse(str_detect(Name,pattern = titles[15]),1,0)) %>%\n  mutate(Countess=ifelse(str_detect(Name,pattern = titles[16]),1,0)) %>%\n  mutate(Jonkheer=ifelse(str_detect(Name,pattern = titles[17]),1,0)) \n           \ntrain3 <- train2 %>%\n  mutate(Married = ifelse(Mr==1|Mrs==1,1,0)) %>%\n  mutate(Unmarried = ifelse(Miss==1|Mlle==1|Master==1,1,0)) %>%\n  mutate(Marital.unknown = ifelse(Married==0&Unmarried==0,1,0))\n\ntable(train3$Survived,train3$Married,labe)\n",
+    "created" : 1507359219643.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2586083609",
+    "id" : "47DF4DE9",
+    "lastKnownWriteTime" : 1507217216,
+    "last_content_update" : 1507359933626,
+    "path" : "~/Documents/Kaggle/Titanic/draft1.R",
+    "project_path" : "draft1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
